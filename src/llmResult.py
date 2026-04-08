@@ -16,15 +16,17 @@ llmModel= GoogleGenerativeAI(
     max_retries=2,
 )
 
-embeddingInstance = Embedding()
-vectorStoreInstance = VectorStore()
-search = Search(embeddingInstance, vectorStoreInstance)
+# embeddingInstance = Embedding()
+# vectorStoreInstance = VectorStore()
+# search = Search(embeddingInstance, vectorStoreInstance)
 
-def generateAns(query, llmModel, search, topK = 5):
+def generateAns(query, search, topK = 5):
     try:
         result = search.search(query,topK)
+        # print("result: ",result)
         content = "\n\n".join([doc["doc"]for doc in result]) if result else "no revelant context found"
-        prompt = f"Use the below context to answer the question. If you don't know the answer, say you don't know. Context: {content} \n\n Question: {query}"
+        prompt = f"Answer the question based on the following retrieved content:\n\n{content}\n\nQuestion: {query}\nAnswer:"
+
         answer = llmModel.invoke([prompt.format(content=content, query=query)])
         return answer
     except Exception as e:
