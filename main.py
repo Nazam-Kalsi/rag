@@ -28,12 +28,7 @@ def app(query:str):
 
 if __name__ == "__main__":
     
-    ans = app("I cannot make you understand. I cannot make anyone understand what is happening inside me. I cannot even explain it to myself")
-
- 
-
-    # ans = generateAns("How about if I sleep a little bit longer and forget all this nonsense")
-
+    ans = app("who is the author and main character of the book?")
 
     print("ans: ",ans)
 

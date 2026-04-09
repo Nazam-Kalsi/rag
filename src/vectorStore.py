@@ -17,7 +17,7 @@ class VectorStore:
         try:
             os.makedirs(self.dir, exist_ok = True)
             self.client  = chromadb.PersistentClient(path  = self.collectionName)
-            self.collection = self.client.get_or_create_collection(name = self.collectionName, metadata={"description":"pdf collection"})
+            self.collection = self.client.get_or_create_collection(name = self.collectionName, metadata={"description":"pdf collection","hnsw:space": "cosine"})
 
 
         except Exception as e:

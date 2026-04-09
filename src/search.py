@@ -6,7 +6,7 @@ class Search:
         self.vectorStoreInstance = vectorStoreInstance
         self.embeddingInstance = embeddingInstance
 
-    def search(self, query: str, topk: int = 5, scoreThreshhold: float = 0.5):
+    def search(self, query: str, topk: int = 5, scoreThreshhold: float = 0.3):
         try:
             # chunking
             # embedding
@@ -29,17 +29,15 @@ class Search:
                 metadata = results["metadatas"][0]
 
                 for i, (docId, distance, doc, metadata) in enumerate(zip(ids, distance, documents, metadata)):
-                    # distance:  [[1.2601248025894165, 1.2601248025894165, 1.2601248025894165, 1.2601248025894165, 1.2601248025894165]]
                     score = 1-distance
-                    print(score)
-                    #score:  -0.2601248025894165
-                    # if score>= scoreThreshhold:
-                    contextDocs.append({
-                        "id": docId,
-                        "score": score,
-                        "doc": doc,
-                        "metadata": metadata
-                    })
+                    # print(score)
+                    if score>= scoreThreshhold:
+                        contextDocs.append({
+                            "id": docId,
+                            "score": score,
+                            "doc": doc,
+                            "metadata": metadata
+                        })
 
             else: print("No doc found")           
 
